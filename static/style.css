@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  background-color: #F8F9FA;
+}
+
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.header {
+  margin-bottom: 7vw;
+}
+
+.navbar {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+}
+
+.container {
+  background-color: #FFFF;
+  padding: 1vw;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
+.sidebar {
+  border-right: 1px solid #DCDCDC;
+}
+
+.main {
+  word-wrap: break-word;
+}
+
+.flash {
+  list-style: none;
+}
+
+#signinButton {
+  margin-left: 16px;
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='reset.css') }}"> -->
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+  </script>
+
+  <script src="//apis.google.com/js/platform.js?onload=start">
+  </script>
+
+  <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
+
+  <title>Login</title>
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar fixed-top navbar-light navbar-expand-sm bg-light">
+      <a class="navbar-brand" href="{{url_for('showCatalogs')}}">Catalog App</a>
+      <ul class="navbar-nav ml-auto">
+        {%if 'username' not in session %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('showLogin')}}">Login</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{url_for('disconnect')}}">Logout</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+  <div class="container">
+    <div class="row">
+      <div class="title col-sm-12">
+        <h1>Login to Catalog App</h1>
+      </div>
+      <!-- GOOGLE PLUS SIGN IN-->
+      <div id="signinButton">
+        <span class="g-signin" data-scope="openid email" data-clientid="1001021942769-qj4f0eggrmk7hc2e5gm18s1r0ve86i2a.apps.googleusercontent.com" data-redirecturi="postmessage" data-accesstype="offline" data-cookiepolicy="single_host_origin" data-callback="signInCallback"
+          data-approvalprompt="force">
+          </span>
+      </div>
+    </div>
+    <div class="row">
+      <div id="result"></div>
+    </div>
+  </div>
+  </div>
+  </div>
+  <script>
+    function signInCallback(authResult) {
+      if (authResult['code']) {
+        // Hide the sign-in button now that the user is authorized
+        $('#signinButton').attr('style', 'display: none');
+        // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+        $.ajax({
+          type: 'POST',
+          url: '/gconnect?state={{STATE}}',
+          processData: false,
+          data: authResult['code'],
+          contentType: 'application/octet-stream; charset=utf-8',
+          success: function(result) {
+            // Handle or verify the server response if necessary.
+            if (result) {
+              $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...')
+              setTimeout(function() {
+                window.location.href = "/catalog";
+              }, 4000);
+
+            } else if (authResult['error']) {
+              console.log('There was an error: ' + authResult['error']);
+            } else {
+              $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+            }
+          }
+        });
+      }
+    }
+  </script>
+
+
+
+  <!--END GOOGLE PLUS SIGN IN -->
+
+</body>
+
+</html>

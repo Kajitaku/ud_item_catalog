@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="row divider green">
+	<div class="col-md-12"></div>
+</div>
+<div class="row banner menu">
+	<div class="col-md-11 col-md-offset-1 padding-none">
+		<h1>{{item.title}}</h1>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-11 col-md-offset-1 padding-top">
+		<p>{{item.description}}</p>
+		{% if 'username' in session %}
+		<a href="{{url_for('editItem', catalog_id=item.catalog_id, item_id=item.id)}}">
+      		edit
+    	</a>
+		<a href="{{url_for('deleteItem', catalog_id=item.catalog_id, item_id=item.id)}}">
+      		delete
+    	</a>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
