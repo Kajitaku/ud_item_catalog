@@ -1,7 +1,7 @@
 # ud_item_catalog
 Source code for Item Catalog Application
 
-**You can CRUD Catalog Item with OAuth.
+**You can CRUD Catalog Item with OAuth.**
 
 # Install following tools.
 **Virtual Machine**
