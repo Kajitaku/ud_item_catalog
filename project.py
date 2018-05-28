@@ -203,8 +203,7 @@ def disconnect():
 
 # Show all catalogs
 @app.route('/')
-@app.route(
-    '/catalog/')
+@app.route('/catalog/')
 def showCatalogs():
     catalogs = session.query(Catalog).order_by(asc(Catalog.name))
     items = session.query(Item).order_by(asc(Item.created_at)).limit(10)
@@ -215,16 +214,14 @@ def showCatalogs():
 
 
 # Show all catalogs json with related items
-@app.route(
-    '/catalog/json')
+@app.route('/catalog/json')
 def showCatalogsJson():
     catalogs = session.query(Catalog).order_by(asc(Catalog.name)).all()
     return jsonify(catalogs=[c.serialize for c in catalogs])
 
 
 # Create a new catalog
-@app.route(
-    '/catalog/new/', methods=['GET', 'POST'])
+@app.route('/catalog/new/', methods=['GET', 'POST'])
 def newcatalog():
     # check logined or not
     if 'username' not in login_session:
@@ -242,8 +239,7 @@ def newcatalog():
 
 
 # Edit a catalog
-@app.route(
-    '/catalog/<int:catalog_id>/edit/', methods=['GET', 'POST'])
+@app.route('/catalog/<int:catalog_id>/edit/', methods=['GET', 'POST'])
 def editcatalog(catalog_id):
     # check logined or not
     if 'username' not in login_session:
@@ -264,8 +260,7 @@ def editcatalog(catalog_id):
 
 
 # Delete a catalog
-@app.route(
-    '/catalog/<int:catalog_id>/delete/', methods=['GET', 'POST'])
+@app.route('/catalog/<int:catalog_id>/delete/', methods=['GET', 'POST'])
 def deleteCatalog(catalog_id):
     # check logined or not
     if 'username' not in login_session:
@@ -307,8 +302,7 @@ def showItemsJson(catalog_id):
 
 
 # Create a new item
-@app.route(
-    '/catalog/<int:catalog_id>/item/new/', methods=['GET', 'POST'])
+@app.route('/catalog/<int:catalog_id>/item/new/', methods=['GET', 'POST'])
 def newItem(catalog_id):
     # check logined or not
     if 'username' not in login_session:
