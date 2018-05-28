@@ -246,6 +246,10 @@ def editcatalog(catalog_id):
         return redirect('/login')
     editedCatalog = session.query(Catalog).filter_by(id=catalog_id).one()
     if request.method == 'POST':
+        # check a current user is authorized or not
+        if editedCatalog.user_id is not login_session['user_id']:
+            flash('Authorization is failed')
+            return redirect(url_for('newcatalog'))
         editedCatalog.name = request.form['name']
         session.add(editedCatalog)
         session.commit()
@@ -267,6 +271,10 @@ def deleteCatalog(catalog_id):
         return redirect('/login')
     deletedCatalog = session.query(Catalog).filter_by(id=catalog_id).one()
     if request.method == 'POST':
+        # check a current user is authorized or not
+        if deletedCatalog.user_id is not login_session['user_id']:
+            flash('Authorization is failed')
+            return redirect(url_for('newcatalog'))
         session.delete(deletedCatalog)
         session.commit()
         flash('catalog Successfully Deleted')
@@ -364,6 +372,10 @@ def editItem(catalog_id, item_id):
         return redirect('/login')
     editedItem = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'POST':
+        # check a current user is authorized or not
+        if editedItem.user_id is not login_session['user_id']:
+            flash('Authorization is failed')
+            return redirect(url_for('newItem', catalog_id=catalog_id))
         editedItem.title = request.form['title']
         editedItem.description = request.form['description']
         editedItem.updated_at = datetime.now()
@@ -396,6 +408,10 @@ def deleteItem(catalog_id, item_id):
         return redirect('/login')
     deletedItem = session.query(Item).filter_by(id=item_id).one()
     if request.method == 'POST':
+        # check a current user is authorized or not
+        if deletedItem.user_id is not login_session['user_id']:
+            flash('Authorization is failed')
+            return redirect(url_for('newItem', catalog_id=catalog_id))
         session.delete(deletedItem)
         session.commit()
         flash('Item Successfully Deleted')
